@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="search-params">
+    <input type="hidden" id="sortProp" name="sortProp" value="" th:value="${param.sortProp!=null?param.sortProp[0]:''}"/>
+    <input type="hidden" id="sortOrder" name="sortOrder" value="" th:value="${param.sortOrder!=null?param.sortOrder[0]:''}"/>
+    <input type="hidden" id="page" name="page" th:value="${param.page!=null?param.page[0]:''}"/>
+    <input type="hidden" id="pageSize" name="pageSize" th:value="${param.pageSize!=null?param.pageSize[0]:T(poprice.wechat.Constants).get('page_size')}"/>
+
+</div>
+
+</body>
+</html>

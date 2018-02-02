@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div class="footer" th:fragment="copyright">
+    <p>
+        <span th:text="${@environment.getProperty('liuliang.company.name')}">大连麦尔斯动零点科技有限公司</span>&copy;2015 版权所有 | 地址：<span th:text="${@environment.getProperty('liuliang.company.address')}">大连市沙河口区连华街66号亿海大厦1403</span> | 客服电话：<span th:text="${@environment.getProperty('liuliang.company.tel')}">4008190999</span>
+        <br/><a href="http://www.miibeian.gov.cn/" th:text="${@environment.getProperty('liuliang.company.beian.info')}">辽ICP备15006363号-1</a>
+    </p>
+</div>
+
+</body>
+</html>

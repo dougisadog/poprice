@@ -1,0 +1,14 @@
+body,h2,h3,h4,h5,.menu a{ font-family:Microsoft YaHei!important; }
+/* login */
+
+.login-header{height: 55px;}
+.login-body-bg{background:url(../img/bodyBg.png) no-repeat center center;}
+.login-bg{margin-top: 30px; height: 470px; background: url(../img/loginBg.png) no-repeat top left;}
+.error-box{*float: left; *margin-bottom: 6px; *width: 100%; min-height: 25px;}
+.login-bg .text-error{ width: 322px; padding: 5px;background:#efcaca; border:1px solid #d8b7b7;  margin-bottom: 10px;margin-left: -10px;text-align: center}
+.login-bg label{padding:0 10px;text-align: right; color: #fff; line-height: 30px\9;}
+.login-bg .form-inline{margin-bottom: 18px;}
+.login-bg .form-inline input{height:30px;width:38%}
+.login-footer{padding: 10px 0 0}
+.login-btn{padding-left: 66px; padding-left: 75px \9; }
+.login-btn .btn{width: 210px;height: 30px;}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  layout:decorate="layouts/main">
+
+<head lang="zh">
+    <title>系统公告管理</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../../static/css/tablesorter.css"
+          th:href="@{/static/css/tablesorter.css}"/>
+    <script src="../../../../static/js/traffic-table.js" th:src="@{/static/js/traffic-table.js}"></script>
+    <script src="../../../../static/js/my97/WdatePicker.js" th:src="@{/static/js/my97/WdatePicker.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchTable").searchTable();
+        });
+    </script>
+</head>
+<body>
+
+<div class="col-md-10" layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>系统公告管理</span>
+
+            <div class="operation">
+                <span>
+                    <a href="#" class="btn btn-default" th:href="@{/base/announcement/create}">+ 新增</a>
+                </span>
+            </div>
+
+        </h2>
+
+        <form id="searchForm" action="#" method="get" th:action="@{/base/announcement/list}" class="form-inline space-well">
+
+            <div th:include="layouts/search-form :: search-params" th:remove="tag"></div>
+
+            <label for="search_LIKE_title">标题:</label>
+            <div class="form-group form-group-sm">
+                <input type="text" class="form-control input-sm" id="search_LIKE_title" name="search_LIKE_title" th:value="${param.search_LIKE_title!=null?param.search_LIKE_title[0]:''}"/>
+            </div>
+            <div class="form-group form-group-sm">
+                <button type="submit" class="btn btn-default btn-sm">搜索</button>
+            </div>
+
+        </form>
+
+        <div class="well well-sm" th:inline="text">
+            共[[${page.totalElements}]]条数据，分[[${page.totalPages}]]页
+        </div>
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+
+        <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+            <thead>
+            <tr>
+                <th class="tablesorter-header" data-prop="title">标题</th>
+                <th class="tablesorter-header" data-prop="title">发布日期</th>
+                <th class="tablesorter-header" data-prop="active">首页显示</th>
+                <th class="tablesorter-header" data-prop="createdBy">创建人</th>
+                <th class="tablesorter-header" data-prop="createdDate">创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r,stat : ${page.content}">
+                <td th:text="${r.title}">title</td>
+                <td th:text="${#temporals.format(r.publishedDate, #messages.msg('app.date_format'))}">publishedDate</td>
+                <td th:text="${r.active?'是':'否'}">title</td>
+                <td th:text="${r.createdBy}">title</td>
+                <td th:text="${#temporals.format(r.createdDate, #messages.msg('app.datetime_format'))}">createdDate</td>
+                <td>
+                    <a href="#" th:href="@{/base/announcement/show/{id}(id=${r.id})}" target="_blank">详细</a>
+                    &nbsp;|
+                    <a href="#" th:href="@{/base/announcement/edit/{id}(id=${r.id})}" target="_blank">编辑</a>
+                    &nbsp;|
+                    <a class="delete" href="#" th:href="@{/base/announcement/delete/{id}(id=${r.id})}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center pagination-wrapper" th:include="layouts/page :: pagination"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  layout:decorate="layouts/main">
+
+<head lang="zh">
+    <title>客户管理</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../../static/css/tablesorter.css"
+          th:href="@{/static/css/tablesorter.css}"/>
+    <script src="../../../../static/js/traffic-table.js" th:src="@{/static/js/traffic-table.js}"></script>
+    <script src="../../../../static/js/my97/WdatePicker.js" th:src="@{/static/js/my97/WdatePicker.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchTable").searchTable();
+        });
+    </script>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="widget-content">
+        <form id="searchForm" action="#" method="get" th:action="@{/wechat/customer/list}" class="form-inline space-well">
+            <div th:include="layouts/search-form :: search-params" th:remove="tag"></div>
+
+            <label for="search_LIKE_nickName">微信昵称:</label>
+            <div class="form-group form-group-sm">
+                <input type="text" class="form-control input-sm" id="search_LIKE_nickName" name="search_LIKE_nickName" th:value="${param.search_LIKE_nickName!=null?param.search_LIKE_nickName[0]:''}"/>
+            </div>
+            <label for="search_LIKE_realName">客户名称:</label>
+            <div class="form-group form-group-sm">
+                <input type="text" class="form-control input-sm" id="search_LIKE_realName" name="search_LIKE_realName" th:value="${param.search_LIKE_realName!=null?param.search_LIKE_realName[0]:''}"/>
+            </div>
+            <label for="search_LIKE_phone">电话:</label>
+            <div class="form-group form-group-sm">
+                <input type="text" class="form-control input-sm" id="search_LIKE_phone" name="search_LIKE_phone" th:value="${param.search_LIKE_phone!=null?param.search_LIKE_phone[0]:''}"/>
+            </div>
+            <!--<label for="search_LIKE_unionId">unionId:</label>-->
+            <!--<div class="form-group form-group-sm">-->
+                <!--<input type="text" class="form-control input-sm" id="search_LIKE_unionId" name="search_LIKE_unionId" th:value="${param.search_LIKE_unionId!=null?param.search_LIKE_unionId[0]:''}"/>-->
+            <!--</div>-->
+            <div class="form-group form-group-sm">
+                <button type="submit" class="btn btn-default btn-sm">搜索</button>
+            </div>
+
+        </form>
+
+        <div class="well well-sm" th:inline="text">
+            共[[${page.totalElements}]]条数据，分[[${page.totalPages}]]页
+        </div>
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+        <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+            <thead>
+            <tr>
+                <th>头像</th>
+                <th class="tablesorter-header" data-prop="nickName">微信昵称</th>
+                <th class="tablesorter-header" data-prop="realName">客户名称</th>
+                <th class="tablesorter-header" data-prop="phone">电话</th>
+                <!--<th class="tablesorter-header" data-prop="sex">性别</th>-->
+                <!--<th class="tablesorter-header" data-prop="openId">openId</th>-->
+                <!--<th class="tablesorter-header" data-prop="subscribeTime">关注时间</th>-->
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r,stat : ${page.content}">
+                <td><img style=" height: 60px;width: 60px" th:src="${r.headImgUrl}" ></td>
+                <td th:text="${r.nickName}">nickName</td>
+                <td th:text="${r.realName}">realName</td>
+                <td th:text="${r.phone}">phone</td>
+                <!--<td th:text="${r.sex == 1 ?'男':'女'}">sex</td>-->
+                <!--<td th:text="${r.openId}">openid</td>-->
+                <!--<td th:text="${r.subscribeTime}">subscribeTime</td>-->
+                <td>
+                    <!--<a href="#" th:href="@{/wechat/customer/edit/{id}(id=${r.id})}">服务</a>-->
+                    <!--&nbsp;|-->
+                    <a href="#" th:href="@{/customer/show/{id}(id=${r.id})}">查看</a>
+                    <!--<a href="#" th:href="@{/wechat/customer/edit/{id}(id=${r.id})}">更名</a>-->
+                    <!--<span th:each="temp,stat : ${temps}">-->
+                      <!--&nbsp;|-->
+                    <!--<a href="#" th:href="@{/wechat/customer/{cid}/template/{id}(id=${temp.id}, cid=${r.id})}" target="_blank" th:text = "${temp.title}">模板标题</a>-->
+                    <!--</span>-->
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-center pagination-wrapper" th:include="layouts/page :: pagination"></div>
+    </div>
+</div>
+</body>
+</html>

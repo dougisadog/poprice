@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main">
+
+<head lang="zh">
+    <title>客户档案</title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".consume").on("click", function (e) {
+                if (confirm("确认要消费该套餐？")) {
+                    var id = $(this).attr("data-id");
+                    var iid = $(this).attr("data-iid");
+                    var t = $(this).attr("data-t");
+                    var url = "/customer/" + id + "/" + iid + "/" + t +
+                        "/consume"
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        dataType: 'json',
+                        success: function (result) {
+                            if (!result.ok) {
+                                alert(result.message);
+                                return false;
+                            } else {
+                                alert(result.message);
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>客户档案</span>
+        </h2>
+
+        <div class="message" th:include="layouts/message-template :: content"
+             th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+        <table class="table table-bordered" style="margin: 20px 0;">
+            <tbody>
+            <tr>
+                <td class="lb">微信头像</td>
+                <td class="value"><img style=" height: 30px;width: 30px" th:src="${entity.headImgUrl}"></td>
+                <td class="lb">微信昵称</td>
+                <td class="value" th:text="${entity.nickName}"></td>
+            </tr>
+            <tr>
+                <td class="lb">客户名称</td>
+                <td class="value" th:text="${entity.realName}"></td>
+                <td class="lb">联系电话</td>
+                <td class="value" th:text="${entity.phone}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2><span>客户套餐</span></h2>
+        <div class="widget-content col-xs-6">
+            <h2><span>购买项目</span></h2>
+            <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+                <thead>
+                <tr>
+                    <th>套餐</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r,stat : ${bugitems}">
+                    <td th:text="${r.title}">title</td>
+                    <td th:text="${r.num}">num</td>
+                    <td><a th:attr="data-id=${entity.id},data-iid=${r.id},data-t='b'" href="javascript:;"
+                           class="consume">消费</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="widget-content col-xs-6">
+            <h2><span>赠送项目</span></h2>
+            <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+                <thead>
+                <tr>
+                    <th>套餐</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r,stat : ${giveitems}">
+                    <td th:text="${r.title}+'(赠)'">title</td>
+                    <td th:text="${r.num}">num</td>
+                    <td><a th:attr="data-id=${entity.id},data-iid=${r.id},data-t='g'" href="javascript:;"
+                           class="consume">消费</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2><span>记录</span></h2>
+        <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+            <thead>
+            <tr>
+                <th class="tablesorter-header" data-prop="nickName">日期</th>
+                <th class="tablesorter-header" data-prop="realName">操作</th>
+                <th class="tablesorter-header" data-prop="phone">日志</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r,stat : ${customerItemRecordList}">
+                <td th:text="${#temporals.format(entity.lastModifiedDate, #messages.msg('app.datetime_format'))?:''}"></td>
+                <td th:text="${r.actionType}"></td>
+                <td th:text="${r.record}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <div class="main-panel">
+            <div class="row">
+                <div class="col-md-12 button-panel">
+                    <a id="btnEdit" class="btn btn-danger"
+                       th:href="@{/customer/{id}/item(id=${entity.id})}">编辑服务</a>
+                    <a id="btnEdit" class="btn btn-primary"
+                       th:href="@{/customer/edit/{id}(id=${entity.id})}">编辑资料</a>
+                    <a id="btnBack" th:href="@{/customer/list}" class="btn btn-default">返回</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

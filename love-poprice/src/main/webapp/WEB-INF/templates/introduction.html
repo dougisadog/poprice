@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>面板介绍</title>
+</head>
+<body>
+<input id = "redirectUrl" type="text" name="q"  placeholder="根目录地址">
+<button id="btnSet" onclick="set(true)">提交</button>
+<button id="btnDelete" onclick="set(false)">删除</button>
+
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+function set(set) {
+	var param = $("#redirectUrl").val();
+	var url = "/wechat/menu";
+	if (!set) {
+		url = url + "/delete"
+	}
+    $.ajax({
+        type: "post",
+        url: url,
+        data: "url="+ param,
+        dataType: "json",
+        success: function (data ,textStatus, jqXHR)
+        {
+            if("true"==data.flag){
+               alert("合法！");
+                return true;
+            }else{
+                alert("不合法！错误信息如下："+data.errorMsg);
+                return false;
+            }
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {      
+            alert("请求失败！");
+        }
+     });
+}
+
+</script>
+</body>
+</html>
+

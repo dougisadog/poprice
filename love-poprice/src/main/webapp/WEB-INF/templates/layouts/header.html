@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+<header th:fragment="header">
+<div class="header">
+    <div class="col-md-8">
+        <a href="index.html" th:href="@{/}">
+            <span class="logo-text">爱上丰婷养生</span>
+        </a>
+    </div>
+    <div class="col-md-4 user">
+        <span class="lock">
+            <a href="#" th:href="@{/auth/logout}"><img src="../../../static/images/lock.png" th:src="@{/static/images/lock.png}"/> 安全退出</a>
+        </span>
+        <span th:text="${#authentication.principal.roles}">角色</span>
+        <span>角色:</span>
+        <a href="#" th:href="@{/account/profile/edit-password}"><span sec:authentication="principal.username">张三</span></a>
+        <span>登录名:</span>
+
+    </div>
+</div>
+</header>
+</body>
+</html>

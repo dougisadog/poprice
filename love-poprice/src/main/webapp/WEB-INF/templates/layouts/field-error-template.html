@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="zh">
+</head>
+<body>
+
+<div th:fragment="content">
+    <div th:if="${#fields.hasAnyErrors()}" class="filed-errors">
+        <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+    </div>
+</div>
+
+</body>
+</html>

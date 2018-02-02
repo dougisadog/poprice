@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/main">
+
+<head lang="zh">
+    <title>编辑</title>
+    <script src="../../../static/js/jquery-validation/jquery.validate.min.js"
+            th:src="@{/static/js/jquery-validation/jquery.validate.min.js}"></script>
+    <script src="../../../static/js/jquery-validation/localization/messages_zh.min.js"
+            th:src="@{/static/js/jquery-validation/localization/messages_zh.min.js}"></script>
+    <script src="../../../static/js/my97/WdatePicker.js" th:src="@{/static/js/my97/WdatePicker.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#inputForm").validate();
+        });
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <form id="inputForm" action="#" th:action="@{/customer/update/item}" method="post" class="form-horizontal"
+          th:object="${entity}">
+        <input type="hidden" name="id" th:value="*{id}"/>
+        <div class="widget-content col-xs-6">
+            <h2>
+                <span>购买项目</span>
+            </h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>套餐</th>
+                    <th>数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r,stat : ${items}">
+                    <td th:text="${r.title}">title</td>
+                    <input type="hidden" name="buyIds" th:value="${r.id}">
+                    <td><input type="number" name="buyNumbers"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="widget-content col-xs-6">
+            <h2>
+                <span>赠送项目</span>
+            </h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>套餐</th>
+                    <th>数量</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r,stat : ${items}">
+                    <td th:text="${r.title}+'(赠)'">title</td>
+                    <input type="hidden" name="giveIds" th:value="${r.id}">
+                    <td><input type="number" name="giveNumbers"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="widget-content col-xs-12">
+            <h2>
+                <span>备注</span>
+            </h2>
+            <input type="text" class="form-control input-sm" data-rule-maxlength="120" maxlength="120" id="remark"
+                   name="remark"/>
+        </div>
+
+        <div class="widget-content col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 button-panel">
+                    <button id="btnCreate" class="btn btn-success">提交</button>
+                    <a id="btnBack" th:href="@{/customer/list}" class="btn btn-default">返回</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>

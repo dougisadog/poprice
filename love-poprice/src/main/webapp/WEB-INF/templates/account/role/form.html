@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="zh">
+</head>
+<body>
+
+<div class="form-body" th:fragment="content">
+
+    <input type="hidden" name="id" th:value="*{id}" />
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="name">名称<span class="indicator">*</span>:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control input-sm" maxlength="25" data-rule-required="true" th:field="*{name}" th:errorclass="field-error" required="required"/>
+            <label class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="remark">备注:</label>
+        <div class="col-md-5">
+            <input type="text" class="form-control input-sm" data-rule-maxlength="120" maxlength="120" th:field="*{remark}" th:errorclass="field-error"/>
+            <label class="error" th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}"></label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="authorities">授权:</label>
+        <div class="col-md-5">
+            <ol>
+                <li th:each="auth : ${authList}">
+                    <input type="checkbox" th:field="*{authorities}" th:value="${auth.authority}" />
+                    <label th:for="${#ids.prev('authorities')}"
+                           th:text="${auth.name}"></label>
+                </li>
+            </ol>
+            <div>
+                <a href="#" onclick="return selectAllCheckbox('input[name=authorities]');">全选</a> / <a href="#" onclick="return cancelAllCheckbox('input[name=authorities]');">全取消</a>
+            </div>
+            <label class="error" th:if="${#fields.hasErrors('authorities')}" th:errors="*{authorities}"></label>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

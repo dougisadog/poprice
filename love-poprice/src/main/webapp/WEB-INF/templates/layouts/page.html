@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="pagination">
+    <ul th:with="current=${page.number+1}, begin=${T(java.lang.Math).max(1, current - page.size/2)}, end=${T(java.lang.Math).min(begin + (page.size - 1), page.totalPages)}" class="pagination">
+
+        <div th:if="${page.hasPrevious()}" th:remove="tag">
+            <li><a href="#" data-page="1">首页</a></li>
+            <li><a href="#" th:attr="data-page=${current-1}">上页</a></li>
+        </div>
+        <div th:unless="${page.hasPrevious()}" th:remove="tag">
+            <li class="disabled"><a href="#">首页</a></li>
+            <li class="disabled"><a href="#">上页</a></li>
+        </div>
+
+        <div th:if="${begin &lt; end}" th:remove="tag">
+        <li th:each="i : ${#numbers.sequence(current-3 > begin?current-3 :begin, current + 3 > end? end: current + 3  )}" th:class="${i == current}?'active':''">
+            <a href="#" th:attr="data-page=${i}" th:text="${i}"></a>
+        </li>
+        </div>
+
+
+        <div th:if="${page.hasNext()}" th:remove="tag">
+            <li><a href="#" th:attr="data-page=${current+1}">下页</a></li>
+            <li><a href="#" th:attr="data-page=${page.totalPages}">尾页</a></li>
+        </div>
+        <div th:unless="${page.hasNext()}" th:remove="tag">
+            <li class="disabled"><a href="#">下页</a></li>
+            <li class="disabled"><a href="#">尾页</a></li>
+        </div>
+
+        <li class="form-inline">
+            <input type="text" th:value="${current}" imemode="disabled" class="form-control input-sm current-val digits-only" style="width: 70px;margin-left: 50px;"/>
+            <button class="btn btn-default btn-sm">跳转</button>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

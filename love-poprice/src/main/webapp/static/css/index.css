@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow: auto;
+}
+
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+.block {
+    display: block;
+}
+
+.text-center {
+    text-align: center;
+    color: #cc0033 !important;
+}
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a, a:hover, a:link, a:visited, a:active {
+    text-decoration: none;
+}
+
+.border-left {
+    border-left: 1px solid #ccc;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #ccc;
+}
+
+
+.nav {
+    width: 100%;
+}
+
+.nav .icon {
+    font-size: 22px;
+}
+
+.nav ul {
+    background: #fff;
+    margin: 0;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border: 1px solid #ccc;
+    padding: 0;
+}
+
+.nav ul li {
+    padding-top: 6px;
+    padding-bottom: 5px;
+}
+
+.nav a {
+    color: #666;
+}
+
+.nav .active a {
+    color: #cc0033;
+}
+
+.nav .text {
+    margin-top: 1px;
+}
+
+
+.phone-tip {
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-top: 15px;
+    text-align: center !important;
+    min-height: 100px;
+    background: white;
+}
+.phone-tip .phone-tip-patch {
+    padding-bottom: 60px;
+}
+.phone-tip a {
+    color: #cc0033;
+}

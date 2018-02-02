@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="zh">
+</head>
+<body>
+<div class="form-body" th:fragment="content">
+    <input type="hidden" name="id" th:value="*{id}" />
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="title">标题<span class="indicator">*</span>:</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control input-sm" maxlength="50" data-rule-required="true" th:field="*{title}" th:errorclass="field-error" />
+            <label class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="publishedDate">发布日期<span class="indicator">*</span>:</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control input-sm"  th:field="*{publishedDate}" th:errorclass="field-error" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:new Date()})" readonly="readonly" required="required"/>
+            <label class="error" th:if="${#fields.hasErrors('publishedDate')}" th:errors="*{publishedDate}"></label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="active"></label>
+        <div class="col-md-4 ">
+            <div class="checkbox">
+                <label><input type="checkbox" th:field="*{active}" /> 首页显示</label>
+            </div>
+            <label class="error" th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></label>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="content">内容<span class="indicator">*</span>:</label>
+        <div class="col-md-5">
+            <textarea class="form-control input-sm" data-rule-required="true" maxlength="120" th:field="*{content}" th:errorclass="field-error" style="width:98%;height: 200px;"></textarea>
+            <label class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></label>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

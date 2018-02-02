@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery.map test...</title>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="jquery.map.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$.Map.put('A', 'CC');
+		$.Map.put('B', 1);
+		$.Map.put('C', true);
+
+		alert("get方法：" + $.Map.get('B'));
+		alert("containsKey方法：" + $.Map.containsKey('C'));
+		alert("containsValue方法：" + $.Map.containsValue(2));
+		alert("remove方法：" + $.Map.remove('C'));
+		alert("size方法：" + $.Map.size());
+
+		alert("keys方法：" + $.Map.keys());
+		alert("values方法：" + $.Map.values());
+		alert("清空前调用isEmpty方法：" + $.Map.isEmpty());
+		alert("clear方法：" + $.Map.clear());
+		alert("清空后调用isEmpty方法：" + $.Map.isEmpty());
+	});
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

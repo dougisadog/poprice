@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="zh">
+</head>
+<body>
+
+<div th:fragment="content">
+    <div class="alert alert-block alert-success fade in" th:if="${#vars['flash.message'] != null}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <p th:utext="${#vars['flash.message']}"></p>
+    </div>
+    <div class="alert alert-block alert-danger fade in" th:if="${#vars['flash.error'] != null}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <p th:utext="${#vars['flash.error']}"></p>
+    </div>
+</div>
+
+</body>
+</html>

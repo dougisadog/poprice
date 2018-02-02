@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/account">
+
+<head lang="zh">
+    <title>授权管理</title>
+
+</head>
+<body>
+
+<div class="col-md-10" layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>授权管理(仅查看)</span>
+        </h2>
+
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+        <table id="searchTable" class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>系统名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r,stat : ${list}">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${r.name}">新增用户</td>
+                    <td th:text="${r.authority}">ROLE_CREATE_USER</td>
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

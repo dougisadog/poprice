@@ -1,0 +1,53 @@
+# All the configurations from here:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+spring.application.name: 丰婷养生会所
+spring.application.version: 1.1
+
+ftyshs.company.beian.info: 1
+ftyshs.company.name: 丰婷养生会所
+ftyshs.company.address: 1
+ftyshs.company.tel: 1
+ftyshs.company.server: 1
+
+# Disable the spring security default configuration from spring-boot-actuator
+management.security.enabled: true
+security.basic.enabled: false
+
+# Disable Jolokia - An http/json bridge for remote JMX access
+endpoints.jolokia.enabled: false
+
+# security configuration (this key should be unique for your application, and kept secret)
+security.rememberme.key: 2a91c7ba0a4764bcb350cf6f9618ebe7adefc261
+
+async:
+    corePoolSize: 4
+    maxPoolSize: 50
+    queueCapacity: 10000
+
+mail:
+    host: smtp.vip.163.com
+    port: 25
+    username:
+    password:
+    protocol: smtp
+    tls: false
+    auth: true
+    from:
+
+spring.thymeleaf.prefix: /WEB-INF/templates/
+# layout布局，springboot已经内置： https://github.com/ultraq/thymeleaf-layout-dialect
+# http://stackoverflow.com/questions/18896915/thymeleaf-templates-is-there-a-way-to-decorate-a-template-instead-of-including
+
+
+#https://spring.io/guides/gs/uploading-files/ 上传文件
+multipart.maxFileSize: 50MB
+multipart.maxRequestSize: 50MB
+
+#http://stackoverflow.com/questions/20673230/spring-boot-overriding-favicon
+spring.mvc.favicon.enabled: false
+
+#防止跟自动生成打架
+spring.freemarker.checkTemplateLocation: false
+spring.jackson.serialization.write-dates-as-timestamps: false
+sms.remote.url:

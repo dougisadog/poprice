@@ -1,0 +1,6 @@
+.table-wrapper {
+    overflow-x: scroll;
+}
+#searchTable tbody * {
+    font-size: 12px;
+}

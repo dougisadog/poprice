@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  layout:decorate="layouts/account">
+
+<head lang="zh">
+    <title>操作日志</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../../static/css/tablesorter.css" th:href="@{/static/css/tablesorter.css}"/>
+    <script src="../../../../static/js/traffic-table.js" th:src="@{/static/js/traffic-table.js}"></script>
+    <script src="../../../../static/js/my97/WdatePicker.js" th:src="@{/static/js/my97/WdatePicker.js}"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../../../static/autocomplete/jquery.autocomplete.css" th:href="@{/static/autocomplete/jquery.autocomplete.css}"/>
+    <script src="../../../../static/autocomplete/jquery.autocomplete.js" th:src="@{/static/autocomplete/jquery.autocomplete.js}"></script>
+
+    <style>
+        td.content {
+            max-width: 300px !important;
+            overflow: auto;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#searchTable").searchTable();
+        });
+
+    </script>
+</head>
+<body>
+
+<div class="col-md-10" layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>操作日志</span>
+
+        </h2>
+
+        <form id="searchForm" action="#" method="get" th:action="@{/account/audit-log/list}" class="form-inline space-well">
+
+            <div th:include="layouts/search-form :: search-params" th:remove="tag"></div>
+            <div class="form-group">
+                <label for="search_EQ_createdBy">操作人:</label>
+                <input type="text" class="form-control input-sm" id="search_EQ_createdBy" name="search_EQ_createdBy" th:value="${param.search_EQ_createdBy!=null?param.search_EQ_createdBy[0]:''}"/>
+            </div>
+            <div class="form-group">
+                <label for="search_LIKE_createdIp">IP地址:</label>
+                <input type="text" class="form-control input-sm" id="search_LIKE_createdIp" name="search_LIKE_createdIp" th:value="${param.search_LIKE_createdIp!=null?param.search_LIKE_createdIp[0]:''}"/>
+            </div>
+            <div class="form-group">
+                <label for="search_EQE_moduleType">模块:</label>
+                <select id="search_EQE_moduleType" name="search_EQE_moduleType" class="form-control input-sm">
+                    <option value="">不限</option>
+                    <option th:each="type: ${T(poprice.wechat.Constants.ModuleType).values()}" th:value="${type.name()}" th:text="${type.type}" th:selected="${#strings.toString(type.name())==#httpServletRequest.getParameter('search_EQE_moduleType')}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="search_EQE_actionType">操作:</label>
+                <select id="search_EQE_actionType" name="search_EQE_actionType" class="form-control input-sm">
+                    <option value="">不限</option>
+                    <option th:each="type: ${T(poprice.wechat.Constants.ActionType).values()}" th:value="${type.name()}" th:text="${type.type}" th:selected="${#strings.toString(type.name())==#httpServletRequest.getParameter('search_EQE_actionType')}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="search_LIKE_content">内容包含:</label>
+                <input type="text" class="form-control input-sm" id="search_LIKE_content" name="search_LIKE_content" th:value="${param.search_LIKE_content!=null?param.search_LIKE_content[0]:''}"/>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="search_GTE_DcreatedDate">创建时间:</label>
+                <input type="text" class="form-control input-sm" id="search_GTE_DcreatedDate" name="search_GTE_DcreatedDate" th:value="${param.search_GTE_DcreatedDate!=null?param.search_GTE_DcreatedDate[0]:''}" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss', readOnly:true})"/>
+                <span>到</span>
+                <input type="text" class="form-control input-sm" id="search_LTE_DcreatedDate" name="search_LTE_DcreatedDate" th:value="${param.search_LTE_DcreatedDate!=null?param.search_LTE_DcreatedDate[0]:''}" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss', readOnly:true})"/>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">搜索</button>
+            </div>
+
+        </form>
+
+        <div class="well well-sm" th:inline="text">
+            共[[${page.totalElements}]]条数据，分[[${page.totalPages}]]页
+        </div>
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+
+        <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+            <thead>
+            <tr>
+                <th class="tablesorter-header" data-prop="createdBy">操作人</th>
+                <th class="tablesorter-header" data-prop="createdDate">操作时间</th>
+                <th class="tablesorter-header" data-prop="createdIp">IP地址</th>
+                <th class="tablesorter-header" data-prop="moduleType">模块</th>
+                <th class="tablesorter-header" data-prop="actionType">操作</th>
+                <th class="tablesorter-header" data-prop="content">内容</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r,stat : ${page.content}">
+                <td th:text="${r.createdBy}">createdBy</td>
+                <td th:text="${#temporals.format(r.createdDate, #messages.msg('app.datetime_format'))}">2015-06-22 22:00</td>
+                <td>
+                    <span th:text="${r.createdIp}">createdIp</span>&nbsp;
+                    <span th:text="${T(poprice.wechat.util.ip.IPSeeker).getInstance().getAddress(r.createdIp)}"></span>
+
+                </td>
+                <td th:text="${r.moduleType}">moduleType</td>
+                <td th:text="${r.actionType}">actionType</td>
+                <td th:text="${r.content}" class="content">content</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center pagination-wrapper" th:include="layouts/page :: pagination"></div>
+    </div>
+</div>
+</body>
+</html>

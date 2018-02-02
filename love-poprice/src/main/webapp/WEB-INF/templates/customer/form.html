@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="zh">
+</head>
+<body>
+<div class="form-body" th:fragment="content">
+    <input type="hidden" name="id" th:value="*{id}" />
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="title">客户名称<span class="indicator">*</span>:</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control input-sm" maxlength="50" data-rule-required="true" th:field="*{realName}" th:errorclass="field-error" />
+            <label class="error" th:if="${#fields.hasErrors('realName')}" th:errors="realName"></label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-1 control-label" for="title">电话<span class="indicator">*</span>:</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control input-sm" maxlength="50" data-rule-required="true" th:field="*{phone}" th:errorclass="field-error" />
+            <label class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

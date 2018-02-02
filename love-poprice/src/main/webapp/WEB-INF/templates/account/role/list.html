@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/account">
+
+<head lang="zh">
+    <title>角色管理</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../../static/css/tablesorter.css" th:href="@{/static/css/tablesorter.css}"/>
+    <script src="../../../../static/js/traffic-table.js" th:src="@{/static/js/traffic-table.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#searchTable").searchTable();
+        });
+    </script>
+</head>
+<body>
+
+<div class="col-md-10" layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>角色管理</span>
+            <div class="operation">
+                <span>
+                    <a href="#" class="btn btn-default" th:href="@{/account/role/create}">+ 新增</a>
+                </span>
+            </div>
+
+        </h2>
+
+        <form id="searchForm" action="#" method="get" th:action="@{/account/role/list}" class="form-inline space-well">
+
+            <input type="hidden" id="sortProp" name="sortProp" value="" th:value="${param.sortProp!=null?param.sortProp[0]:''}"/>
+            <input type="hidden" id="sortOrder" name="sortOrder" value="" th:value="${param.sortOrder!=null?param.sortOrder[0]:''}"/>
+
+            <div class="form-group form-group-sm">
+                <label for="search_LIKE_name">名称:</label>
+                <input type="text" class="form-control input-sm" id="search_LIKE_name" name="search_LIKE_name" th:value="${param.search_LIKE_name!=null?param.search_LIKE_name[0]:''}"/>
+            </div>
+
+            <div class="form-group form-group-sm">
+                <button type="submit" class="btn btn-default btn-sm">搜索</button>
+            </div>
+
+        </form>
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+        <table id="searchTable" class="table table-hover table-striped tablesorter-bootstrap">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th class="tablesorter-header" data-prop="name">名称</th>
+                    <th>备注</th>
+                    <th class="tablesorter-header" data-prop="createdBy">创建人</th>
+                    <th class="tablesorter-header" data-prop="createdDate">创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r,stat : ${list}">
+                    <td th:text="${stat.count}">1</td>
+                    <td th:text="${r.name}">上游合同</td>
+                    <td th:text="${r.remark}">remark</td>
+                    <td th:text="${r.createdBy}">admin</td>
+                    <td th:text="${#dates.format(r.createdDate, #messages.msg('app.datetime_format'))}">2015-06-22 22:00</td>
+                    <td>
+                        <a href="#" th:href="@{/account/role/show/{id}(id=${r.id})}">详细</a>
+                        &nbsp;|
+                        <a href="#" th:href="@{/account/role/edit/{id}(id=${r.id})}">修改</a>
+                        &nbsp;|
+                        <a class="delete" href="#" th:href="@{/account/role/delete/{id}(id=${r.id})}">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+</div>
+
+
+
+</body>
+</html>

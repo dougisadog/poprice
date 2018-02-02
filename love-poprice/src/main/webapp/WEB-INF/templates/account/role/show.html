@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layouts/account">
+
+<head lang="zh">
+    <title>角色管理</title>
+</head>
+<body>
+
+<div class="col-md-10" layout:fragment="content">
+    <div class="widget-content">
+        <h2>
+            <span>角色详情</span>
+        </h2>
+
+        <div class="message" th:include="layouts/message-template :: content" th:if="${#vars['flash.message'] != null or #vars['flash.error'] != null}" th:remove="tag"></div>
+
+        <div class="detail-panel">
+            <div class="row">
+                <label class="col-md-2 control-label">名称:</label>
+                <div class="col-md-4" th:text="${entity.name}"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 control-label">备注:</label>
+                <div class="col-md-4" th:text="${entity.remark}"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 control-label">授权列表:</label>
+                <div class="col-md-6" th:text="${#strings.listJoin(descList,',')}"></div>
+            </div>
+
+            <h6></h6>
+
+            <div class="row">
+                <label class="col-md-2 control-label">创建人:</label>
+                <div class="col-md-2" th:text="${entity.createdBy}"></div>
+
+                <label class="col-md-2 control-label">创建时间:</label>
+                <div class="col-md-2" th:text="${#dates.format(entity.createdDate, #messages.msg('app.datetime_format'))}"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 control-label">最后修改人:</label>
+                <div class="col-md-2" th:text="${entity.lastModifiedBy}"></div>
+                <label class="col-md-2 control-label">最后修改时间:</label>
+                <div class="col-md-2" th:text="${#dates.format(entity.lastModifiedDate, #messages.msg('app.datetime_format'))?:''}" th:if="${entity.lastModifiedDate!=null}"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 button-panel">
+                    <a id="btnEdit" class="btn btn-primary" th:href="@{/account/role/edit/{id}(id=${entity.id})}">编辑</a>
+                    <a id="btnDelete" class="btn btn-danger delete" th:href="@{/account/role/delete/{id}(id=${entity.id})}">删除</a>
+                    <a id="btnBack"  th:href="@{/account/role/list?{params}(params=${params})}" class="btn btn-default">返回</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+</body>
+</html>
